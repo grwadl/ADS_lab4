@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "tsc && node dist/index.js",
     "dev": "nodemon --wath src/** --exec 'tsc && node dist/index.js'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/prompt-sync": "^4.2.0",
     "nodemon": "^2.0.20",
     "prompt-sync": "^4.2.0",
     "ts-node": "^10.9.1"
