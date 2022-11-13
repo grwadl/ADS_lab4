@@ -6,6 +6,7 @@ enum MenuMessages {
 }
 
 enum LogMessages {
+  ADDED = 'successfully added',
   NOT_FOUND = 'unfortunately element is not found :(',
   EMPTY_TREE = 'tree is empty :(',
   NOT_EMPTY_TREE = 'tree is not empty!',

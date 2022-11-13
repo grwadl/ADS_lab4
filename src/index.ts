@@ -1,6 +1,7 @@
 import promptApi from 'prompt-sync'
 import { Element } from './element'
 import { LogMessages, MenuMessages } from './enums'
+import { DeleteFuncParams, deleteNode, isElementDefined, printNodes } from './helpers'
 import { Tree } from './tree'
 
 const prompt = promptApi({ sigint: true })
@@ -9,9 +10,7 @@ const firstName: string = prompt(MenuMessages.START)
 const firstElement: Element = new Element(firstName)
 const tree: Tree = new Tree(firstElement)
 
-let input: number = 3
-
-const isElementDefined = (el: Element | undefined): el is Element => !!(el && 'name' in el && el['name'] && el instanceof Element)
+let input: number = -1
 
 while (input !== 0) {
   input = Number(prompt(MenuMessages.MAIN))
@@ -22,7 +21,7 @@ while (input !== 0) {
 
       if (!isElementDefined(tree.Top)) {
         tree.Top = new Element(name)
-        console.log('successfully added')
+        console.log(LogMessages.ADDED)
         break
       }
       const parent = tree.FindNode(ancestorName)
@@ -31,14 +30,14 @@ while (input !== 0) {
         const newChild: Element = new Element(name)
         try {
           parent.AddChild(newChild)
-          console.log('successfully added')
+          console.log(LogMessages.ADDED)
         } catch (e) {
           console.log(e instanceof Error ? e.message : e)
         }
       } else console.log(LogMessages.NOT_FOUND)
       break
     case 2:
-      tree.Top ? tree.PrintAllNodes(tree.Top) : console.log(LogMessages.EMPTY_TREE)
+      tree.Top ? tree.Enumerate(tree.Top, { callbackFn: printNodes }) : console.log(LogMessages.EMPTY_TREE)
       break
     case 3:
       const elementName: string = prompt(MenuMessages.NODE_NAME)
@@ -49,10 +48,11 @@ while (input !== 0) {
       console.log(isElementDefined(tree.Top) ? LogMessages.NOT_EMPTY_TREE : LogMessages.NOT_EMPTY_TREE)
       break
     case 5:
-      const nameElementToDelete: string = prompt(MenuMessages.NODE_NAME)
-      let result: boolean = tree.RemoveNode(nameElementToDelete)
-
-      console.log(result ? LogMessages.DELETED : LogMessages.NOT_FOUND)
+      const nameToDelete: string = prompt(MenuMessages.NODE_NAME)
+      const params: DeleteFuncParams = { nameToDelete, deleted: false }
+      const carriedDeleteFunc = deleteNode(params)
+      tree.Enumerate(tree.Top, { callbackFn: carriedDeleteFunc })
+      console.log(params.deleted ? LogMessages.DELETED : LogMessages.NOT_FOUND)
       break
   }
 }
