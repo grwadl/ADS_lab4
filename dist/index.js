@@ -38,7 +38,7 @@ while (input !== 0) {
                 console.log(enums_1.LogMessages.NOT_FOUND);
             break;
         case 2:
-            tree.PrintAllNodes(tree.Top);
+            tree.Top ? tree.PrintAllNodes(tree.Top) : console.log(enums_1.LogMessages.EMPTY_TREE);
             break;
         case 3:
             const elementName = prompt(enums_1.MenuMessages.NODE_NAME);

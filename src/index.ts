@@ -38,7 +38,7 @@ while (input !== 0) {
       } else console.log(LogMessages.NOT_FOUND)
       break
     case 2:
-      tree.PrintAllNodes(tree.Top)
+      tree.Top ? tree.PrintAllNodes(tree.Top) : console.log(LogMessages.EMPTY_TREE)
       break
     case 3:
       const elementName: string = prompt(MenuMessages.NODE_NAME)
