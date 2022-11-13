@@ -11,7 +11,7 @@ const tree: Tree = new Tree(firstElement)
 
 let input: number = 3
 
-const isElementDefined = (el: Element | undefined): el is Element => !!(el && 'name' in Element && el['name'] && el instanceof Element)
+const isElementDefined = (el: Element | undefined): el is Element => !!(el && 'name' in el && el['name'] && el instanceof Element)
 
 while (input !== 0) {
   input = Number(prompt(MenuMessages.MAIN))
