@@ -19,12 +19,12 @@ while (input !== 0) {
     case 1:
       const [name, ancestorName] = prompt(MenuMessages.ADD).split(' ')
 
-      if (!isElementDefined(tree.Top)) {
+      if (tree.IsEmpty()) {
         tree.Top = new Element(name)
         console.log(LogMessages.ADDED)
         break
       }
-      const parent = tree.FindNode(ancestorName)
+      const parent: Element | undefined = tree.FindNode(ancestorName)
 
       if (isElementDefined(parent)) {
         const newChild: Element = new Element(name)
@@ -45,7 +45,7 @@ while (input !== 0) {
       console.log(isElementDefined(el) ? el.ToString() : LogMessages.NOT_FOUND)
       break
     case 4:
-      console.log(isElementDefined(tree.Top) ? LogMessages.NOT_EMPTY_TREE : LogMessages.NOT_EMPTY_TREE)
+      console.log(tree.IsEmpty())
       break
     case 5:
       const nameToDelete: string = prompt(MenuMessages.NODE_NAME)

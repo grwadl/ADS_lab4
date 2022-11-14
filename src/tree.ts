@@ -1,4 +1,6 @@
 import { Element, Stack } from './element'
+import { LogMessages } from './enums'
+import { isElementDefined } from './helpers'
 
 interface IOptions {
   callbackFn?: (el: Element) => void
@@ -17,7 +19,7 @@ class Tree {
     this.Enumerate(node.Right, options)
   }
 
-  FindNode(name: string, parent?: Element): Element | undefined {
+  FindNode(name: string): Element | undefined {
     let tempEl: Element | undefined = this.Top
     if (!tempEl) return
     const stack = new Stack<Element>()
@@ -33,6 +35,9 @@ class Tree {
       }
     }
     return result
+  }
+  IsEmpty(): string {
+    return isElementDefined(this.Top) ? LogMessages.NOT_EMPTY_TREE : LogMessages.NOT_EMPTY_TREE
   }
 }
 
