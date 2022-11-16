@@ -19,7 +19,7 @@ while (input !== 0) {
     case 1:
       const [name, ancestorName] = prompt(MenuMessages.ADD).split(' ')
 
-      if (tree.IsEmpty()) {
+      if (!tree.Top) {
         tree.Top = new Element(name)
         console.log(LogMessages.ADDED)
         break
@@ -52,6 +52,7 @@ while (input !== 0) {
       const params: DeleteFuncParams = { nameToDelete, deleted: false }
       const carriedDeleteFunc = deleteNode(params)
       tree.Enumerate(tree.Top, { callbackFn: carriedDeleteFunc })
+
       console.log(params.deleted ? LogMessages.DELETED : LogMessages.NOT_FOUND)
       break
   }
